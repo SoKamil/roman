@@ -139,8 +139,8 @@ export default {
       return Array(+digits.join("") + 1).join("M") + roman;
     },
     arabize (str) {
-      var	str = str.toUpperCase(),
-        validator = /^M*(?:D?C{0,3}|C[MD])(?:L?X{0,3}|X[CL])(?:V?I{0,3}|I[XV])$/,
+        str = str.toUpperCase();
+        var validator = /^M*(?:D?C{0,3}|C[MD])(?:L?X{0,3}|X[CL])(?:V?I{0,3}|I[XV])$/,
         token = /[MDLV]|C[MD]?|X[CL]?|I[XV]?/g,
         key = {M:1000,CM:900,D:500,CD:400,C:100,XC:90,L:50,XL:40,X:10,IX:9,V:5,IV:4,I:1},
         num = 0, m;
@@ -160,11 +160,11 @@ export default {
       return rand
     },
     createRiddle () {
-      if (this.level != 1) {
-        var bottomLine = parseInt(this.level) * 10 - 10
+      if (this.level == 1) {
+        var bottomLine = 1
       }
       else {
-        var bottomLine = 1
+        bottomLine = parseInt(this.level) * 10 - 10
       }
       var topLine = parseInt(this.level) * 50
 

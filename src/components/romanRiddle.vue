@@ -33,8 +33,7 @@ export default {
         })
     },
     methods: {
-        guess(e) {
-            console.log(this.answer)
+        guess() {
             if (this.answer != null && this.answer.trim() == this.riddleArabized) {
                 console.log(`Good answer! ${this.answer} == ${this.riddleArabized}`)
                 this.$emit('goodAnswer')

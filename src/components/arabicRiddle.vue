@@ -40,7 +40,7 @@ export default {
         }
     },
     methods: {
-        guess(e) {
+        guess() {
             console.log(this.answer, this.riddleRomanized)
             if (this.answer != null && this.answer.toUpperCase().trim() == this.riddleRomanized) {
                 console.log(`Good answer! ${this.answer} == ${this.riddleRomanized}`)
