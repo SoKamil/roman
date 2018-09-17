@@ -44,4 +44,7 @@ export default {
         color: #f6f6f6;
         font-family: Roboto;
     }
+    .answerInput {
+        width: 400px;
+    }
 </style>

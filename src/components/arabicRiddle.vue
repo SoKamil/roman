@@ -1,7 +1,7 @@
 <template>
     <div>
         <span class="display-4 font-weight-regular">{{riddleArabized}}</span>
-        <v-text-field autofocus id="answerInRomanian" type="string" v-model="answer" @keyup.enter="guess" ref="questionInput"></v-text-field>
+        <v-text-field autofocus id="answerInRomanian" class="answerInput" type="string" v-model="answer" @keyup.enter="guess" ref="questionInput"></v-text-field>
     </div>
 </template>
 

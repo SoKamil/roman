@@ -7,7 +7,7 @@
         <arabic-riddle v-if="currentType==='arabic'" @goodAnswer="goodAnswer" @badAnswer="badAnswer" v-bind:riddle="currentRiddle" class="riddle"></arabic-riddle>
       </div>
     </transition>
-    <div id="bg">
+    <div id="bg" ref="bg">
       <progress-bar v-show="gameStarted" :progress="progress"></progress-bar>
       <div v-show="gameStarted" id="levelInfo">
         Obecny poziom:<span id="level"> {{level}}</span>
@@ -173,9 +173,9 @@ export default {
       
       this.prevRand = parseInt(rand)
       this.currentRiddle = parseInt(rand)
-      // this.currentType = 'roman'
+      this.currentType = 'roman'
       // setTimeout(()=>this.randomBetween(0,1) === 0 ? this.currentType = 'roman' : this.currentType = 'arabic',10)
-      this.randomBetween(0,1) === 0 ? this.currentType = 'roman' : this.currentType = 'arabic'
+      // this.randomBetween(0,1) === 0 ? this.currentType = 'roman' : this.currentType = 'arabic'
     },
     goodAnswer(){
       this.streak++
@@ -344,25 +344,10 @@ html {
   align-items: center;
 }
 
-@media screen and (max-width: 625px) {
-  #bg,#mainCard,#info {
-    min-width: 94vw!important;
-    width: 94vw!important;
-  }
-  #bg {
-    min-height: 90vh!important;
-  }
-}
-
-@media screen and (max-height: 600px) {
-  #bg {
-    min-height: 90vh!important;
-  }
-}
 
 #mainCard {
   position:absolute;
-  width:400px;
+  /* width:400px; */
 }
 #info {
   width: 435px;
@@ -371,11 +356,31 @@ html {
   position: absolute;
   z-index: -2;
   min-width:600px;
-  max-width:800px;
-  min-height: 600px;
-  max-width: 800px;
+  height: 600px;
   background-color: #f6f6f6;
 }
+
+
+@media screen and (max-width: 625px) {
+  #bg,#mainCard,#info {
+    min-width: 94vw!important;
+    width: 94vw!important;
+  }
+  #bg {
+    height: calc(100vh - 89px);
+  }
+}
+
+@media screen and (max-height: 690px) {
+  #bg {
+    height: calc(100vh - 89px);
+  }
+
+  #info {
+    width: 600px;
+  }
+}
+
 @-webkit-keyframes blue-purple {
     0%{background-position:84% 0%}
     50%{background-position:17% 100%}
