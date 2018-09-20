@@ -30,19 +30,12 @@ export default {
         },
         riddle(newVal) {
             this.riddle = newVal
-            // this.riddleArabized = parseInt(this.riddle)
-            // this.riddleRomanized = this.$parent.romanize(this.riddle)
         },
         currentRiddle() {
             this.$nextTick(()=>{
                 this.fixTextWidth()
             })
         }
-        // riddleRomanized() {
-        //     this.$nextTick(()=>{
-        //         this.fixTextWidth()
-        //     })
-        // }
     },
     created () {
         this.$nextTick(() => {

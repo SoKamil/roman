@@ -43,23 +43,22 @@ export default {
   data() {
     return {
       amountToLevelUp: 4,
-      gameStarted: false,
-      riddleType: String,
-      currentRiddle: '',
-      level: 1,
-      streak: 0,
-      progress: 0,
       animated: false,
+      currentRiddle: '',
       faded: false,
+      gameStarted: false,
+      level: 1,
+      riddleType: String,
+      streak: 0,
       points: 0,
-      prevRand: 0
+      prevRand: 0,
+      progress: 0
     }
   },
   created () {
     this.setUpLocalStorage()
     this.initializeSounds()
     this.updateAmountToLevelUp()
-    // setInterval(()=>this.createRiddle(),1000)
   }, 
   methods: {
     addPoints(amount) {
@@ -116,7 +115,6 @@ export default {
         num += key[m[0]];
       return num;
     },
-
     randomBetween(min,max){
       return Math.floor(Math.random()*(max-min+1)+min)
     },
@@ -156,7 +154,6 @@ export default {
         this.correctSound.play()
       }
 
-      // alert('dobra odpowiedz')
       this.makeFade(400)
       setTimeout(()=>this.createRiddle(),400)
       
