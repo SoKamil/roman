@@ -3,9 +3,8 @@
     <info-menu  v-show="!gameStarted" @startGame="startGame"></info-menu>
     <transition name="fade"> 
       <div :class="{'shake animated': animated}" @animationend="animated = false" v-if="gameStarted" v-show="!faded" id="mainCard">
-        <!-- <roman-riddle v-if="currentType==='roman'" @goodAnswer="goodAnswer" @badAnswer="badAnswer" v-bind:riddle="currentRiddle" class="riddle"></roman-riddle>
-        <arabic-riddle v-if="currentType==='arabic'" @goodAnswer="goodAnswer" @badAnswer="badAnswer" v-bind:riddle="currentRiddle" class="riddle"></arabic-riddle> -->
-        <riddle :type="riddleType" @goodAnswer="goodAnswer" @badAnswer="badAnswer" :riddle="currentRiddle" class="riddle"></riddle>
+        <roman-riddle v-if="currentType==='roman'" @goodAnswer="goodAnswer" @badAnswer="badAnswer" v-bind:riddle="currentRiddle" class="riddle"></roman-riddle>
+        <arabic-riddle v-if="currentType==='arabic'" @goodAnswer="goodAnswer" @badAnswer="badAnswer" v-bind:riddle="currentRiddle" class="riddle"></arabic-riddle>
       </div>
     </transition>
     <div id="bg" ref="bg">
@@ -42,10 +41,9 @@
 
 <script>
 import animatedNumber from './components/animatedNumber.vue'
-// import arabicRiddle from './components/arabicRiddle.vue'
-// import romanRiddle from './components/romanRiddle.vue'
-import riddle from './components/riddle.vue'
+import arabicRiddle from './components/arabicRiddle.vue'
 import infoMenu from './components/infoMenu.vue'
+import romanRiddle from './components/romanRiddle.vue'
 import progressBar from './components/progressBar.vue'
 import Howler from 'howler'
 const { Howl } = Howler
@@ -54,10 +52,9 @@ const { Howl } = Howler
 export default {
   name: 'app',
   components: {
-    // arabicRiddle,
-    // romanRiddle,
-    riddle,
+    arabicRiddle,
     infoMenu,
+    romanRiddle,
     progressBar,
     animatedNumber
   },
@@ -65,8 +62,8 @@ export default {
     return {
       amountToLevelUp: 4,
       gameStarted: false,
-      riddleType: String,
-      currentRiddle: '',
+      currentType: String,
+      currentRiddle: Number,
       level: 1,
       streak: 0,
       progress: 0,
@@ -142,7 +139,6 @@ export default {
       return Array(+digits.join("") + 1).join("M") + roman;
     },
     arabize (str) {
-        console.log('arabizing ' + str)
         str = str.toUpperCase();
         var validator = /^M*(?:D?C{0,3}|C[MD])(?:L?X{0,3}|X[CL])(?:V?I{0,3}|I[XV])$/,
         token = /[MDLV]|C[MD]?|X[CL]?|I[XV]?/g,
@@ -177,10 +173,9 @@ export default {
       
       this.prevRand = parseInt(rand)
       this.currentRiddle = parseInt(rand)
-      // this.currentType = 'roman'
-      this.randomBetween(0,1) === 0 ? this.riddleType = 'roman' : this.riddleType = 'arabic'
-      // this.riddleType = 'roman'
+      this.currentType = 'roman'
       // setTimeout(()=>this.randomBetween(0,1) === 0 ? this.currentType = 'roman' : this.currentType = 'arabic',10)
+      // this.randomBetween(0,1) === 0 ? this.currentType = 'roman' : this.currentType = 'arabic'
     },
     goodAnswer(){
       this.streak++

@@ -8,6 +8,7 @@
             Punkty, jak i obecny poziom nie znikają po odświeżeniu strony, resetuje się natomiast licznik poprawnych pod rząd odpowiedzi.<br>
             Ściągawka znajduje się w lewym górnym rogu.<br>
             Powodzenia!
+
         </div>
         <div style="text-align: center;">
             <v-btn id="start" @click="startGame" large color="blue">GRAJ</v-btn>
