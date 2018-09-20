@@ -52,11 +52,12 @@ export default {
         },
         fixTextWidth() {
             var rt = this.$refs['riddleText']
+            rt.style.fontSize = ''
+            
             var riddleTextWidth = rt.getBoundingClientRect().width
             var bgWidth = this.$parent.$refs['bg'].getBoundingClientRect().width
             var bgMargin = 30
 
-            rt.style.fontSize = ''
             while (bgWidth - bgMargin < riddleTextWidth) {
                 var riddleTextSize = parseFloat(getComputedStyle(rt, null).getPropertyValue('font-size'))
                 rt.style.fontSize = riddleTextSize - 1 + 'px'

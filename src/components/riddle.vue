@@ -57,8 +57,7 @@ export default {
     methods: {
         guess() {
             if (this.type == 'arabic') {
-                console.log('arabic')
-                if (this.answer != null && this.answer.trim() == this.riddleRomanized) {
+                if (this.answer != null && this.answer.trim().toUpperCase() == this.riddleRomanized) {
                     console.log(`Good answer! ${this.answer} == ${this.riddleRomanized}`)
                     this.$emit('goodAnswer')
                 }
@@ -66,35 +65,28 @@ export default {
                     console.log(`Bad answer! ${this.answer} != ${this.riddleRomanized}`)
                     this.$emit('badAnswer')
                 }
-            } else if (this.type == 'roman') {
-                // console.log('roman')
-                // if (this.answer != null && this.answer.toUpperCase().trim() == this.riddleArabized) {
-                //     console.log(`Good answer! ${this.answer} == ${this.riddleArabized}`)
-                //     this.$emit('goodAnswer')
-                // }
-                // else {
-                //     console.log(`Bad answer! ${this.answer} != ${this.riddleArabized}`)
-                //     this.$emit('badAnswer')
-                // }
-                this.$emit('goodAnswer')
+            } else if (this.type == 'romanic') {
+                if (this.answer != null && this.answer.toUpperCase().trim() == this.riddleArabized) {
+                    console.log(`Good answer! ${this.answer} == ${this.riddleArabized}`)
+                    this.$emit('goodAnswer')
+                }
+                else {
+                    console.log(`Bad answer! ${this.answer} != ${this.riddleArabized}`)
+                    this.$emit('badAnswer')
+                }
             }
 
             this.answer = null
         },
         fixTextWidth() {
             var rt = this.$refs['riddleText']
+                rt.style.fontSize = ''
             var riddleTextWidth = rt.getBoundingClientRect().width
             var bgWidth = this.$parent.$refs['bg'].getBoundingClientRect().width
             var bgMargin = 30
 
-            console.log(riddleTextWidth)
-
-            this.$nextTick(()=>{
-                console.log(rt.getBoundingClientRect().width)
-            })
-            rt.style.fontSize = ''
-
             while (bgWidth - bgMargin < riddleTextWidth) {
+                console.log('resizing')
                 var riddleTextSize = parseFloat(getComputedStyle(rt, null).getPropertyValue('font-size'))
                 rt.style.fontSize = riddleTextSize - 1 + 'px'
                 riddleTextWidth = rt.getBoundingClientRect().width

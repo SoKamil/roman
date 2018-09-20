@@ -18,12 +18,12 @@
       </div>
     </div>
     <!-- side help menu -->
-    <div id="btn"  @click="showHelp" :class="{'active': modalOpened}">
+    <div id="btn"  @click="showHelp" :class="{'active': sidebarOpened}">
       <div id='top'></div>
       <div id='middle'></div>
       <div id='bottom'></div>
     </div>
-    <div id="box" :class="{'active': modalOpened}">
+    <div id="box" :class="{'active': sidebarOpened}">
       <div id="items">
           <div class="item">I - 1</div>
           <div class="item">V - 5</div>
@@ -42,20 +42,16 @@
 
 <script>
 import animatedNumber from './components/animatedNumber.vue'
-// import arabicRiddle from './components/arabicRiddle.vue'
-// import romanRiddle from './components/romanRiddle.vue'
-import riddle from './components/riddle.vue'
+import Howler from 'howler'
 import infoMenu from './components/infoMenu.vue'
 import progressBar from './components/progressBar.vue'
-import Howler from 'howler'
-const { Howl } = Howler
+import riddle from './components/riddle.vue'
 
+const { Howl } = Howler
 
 export default {
   name: 'app',
   components: {
-    // arabicRiddle,
-    // romanRiddle,
     riddle,
     infoMenu,
     progressBar,
@@ -74,31 +70,18 @@ export default {
       faded: false,
       points: 0,
       prevRand: 0,
-      modalOpened: false
+      sidebarOpened: false
     }
   },
   created () {
-    if(!localStorage.getItem('currentLevel')){
-      localStorage.setItem('currentLevel', 1)
-    }
-    else {
-      this.level = localStorage.getItem('currentLevel')
-    }
-
-    if(!localStorage.getItem('points')){
-      localStorage.setItem('points', 0)
-    }
-    else {
-      this.points = localStorage.getItem('points')
-    }
-
+    this.setUpLocalStorage()
     this.initializeSounds()
     this.updateAmountToLevelUp()
     // setInterval(()=>this.createRiddle(),1000)
   }, 
   methods: {
-    showHelp () {
-      this.modalOpened = !this.modalOpened
+    showHelp() {
+      this.sidebarOpened = !this.sidebarOpened
     },
     addPoints(amount) {
       console.log(`Added ${amount} points to score`)
@@ -128,7 +111,7 @@ export default {
         localStorage.setItem('currentLevel', this.level)
       }
     },
-    romanize (num) {
+    romanize(num) {
       if (!+num)
         return false;
       var	digits = String(+num).split(""),
@@ -141,7 +124,7 @@ export default {
         roman = (key[+digits.pop() + (i * 10)] || "") + roman;
       return Array(+digits.join("") + 1).join("M") + roman;
     },
-    arabize (str) {
+    arabize(str) {
         console.log('arabizing ' + str)
         str = str.toUpperCase();
         var validator = /^M*(?:D?C{0,3}|C[MD])(?:L?X{0,3}|X[CL])(?:V?I{0,3}|I[XV])$/,
@@ -154,7 +137,8 @@ export default {
         num += key[m[0]];
       return num;
     },
-    randomBetween(min,max) {
+
+    randomBetween(min,max){
       return Math.floor(Math.random()*(max-min+1)+min)
     },
     randomBetweenNoDup(min,max, prev = 0) {
@@ -163,7 +147,7 @@ export default {
       } while (rand == prev)
       return rand
     },
-    createRiddle () {
+    createRiddle() {
       if (this.level == 1) {
         var bottomLine = 1
       }
@@ -173,16 +157,12 @@ export default {
       var topLine = parseInt(this.level) * 50
 
       var rand = this.randomBetweenNoDup(bottomLine,topLine, this.prevRand)
-      // var rand = this.randomBetweenNoDup(1,3, this.prevRand)
-      
+
       this.prevRand = parseInt(rand)
       this.currentRiddle = parseInt(rand)
-      // this.currentType = 'roman'
-      this.randomBetween(0,1) === 0 ? this.riddleType = 'roman' : this.riddleType = 'arabic'
-      // this.riddleType = 'roman'
-      // setTimeout(()=>this.randomBetween(0,1) === 0 ? this.currentType = 'roman' : this.currentType = 'arabic',10)
+      this.randomBetween(0,1) === 0 ? this.riddleType = 'romanic' : this.riddleType = 'arabic'
     },
-    goodAnswer(){
+    goodAnswer() {
       this.streak++
       this.updateProgress()
       this.addPoints(parseInt(this.level) * 5 + (2*parseInt(this.streak)))
@@ -202,7 +182,7 @@ export default {
       setTimeout(()=>this.createRiddle(),400)
       
     },
-    badAnswer(){
+    badAnswer() {
       this.streak = 0
       this.wrongSound.play()
       this.shakeCard()
@@ -212,7 +192,7 @@ export default {
       this.gameStarted = true
       this.createRiddle()
     },
-    initializeSounds(){
+    initializeSounds() {
       this.wrongSound = new Howl({
         src: ['./static/sounds/wrong.mp3', './static/sounds/wrong.ogg'],
         volume: 0.6
@@ -225,6 +205,21 @@ export default {
         src: ['./static/sounds/levelup.mp3', './static/sounds/levelup.ogg'],
         volume: 0.6
       })
+    },
+    setUpLocalStorage() {
+      if(!localStorage.getItem('currentLevel')){
+        localStorage.setItem('currentLevel', 1)
+      }
+      else {
+        this.level = localStorage.getItem('currentLevel')
+      }
+
+      if(!localStorage.getItem('points')){
+        localStorage.setItem('points', 0)
+      }
+      else {
+        this.points = localStorage.getItem('points')
+      }
     },
     shakeCard() {
       this.animated = true
