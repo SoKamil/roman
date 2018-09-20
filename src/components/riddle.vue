@@ -1,15 +1,11 @@
 <template>
-    <!-- <riddle :type="riddleType" @goodAnswer="goodAnswer" @badAnswer="badAnswer" v-bind:riddle="currentRiddle" class="riddle"></riddle> -->
-    <!-- <roman-riddle v-if="currentType==='roman'" @goodAnswer="goodAnswer" @badAnswer="badAnswer" v-bind:riddle="currentRiddle" class="riddle"></roman-riddle> -->
-    <div>
+   <div>
         <span class="riddleText" ref="riddleText">{{currentRiddle}}</span>
-        <!-- <v-text-field id="answerInArabic" class="answerInput" autofocus type="number" v-model="answer" @keyup.enter="guess" ref="questionInput"></v-text-field> -->
         <v-text-field id="answerInput" autofocus v-model="answer" @keyup.enter="guess" ref="questionInput"></v-text-field>
     </div>
 </template>
 
 <script>
-//
 export default {
     props: ['type', 'riddle'],
     data () {
@@ -18,14 +14,14 @@ export default {
         }
     },
     computed: {
+        currentRiddle() {
+            return this.type == 'arabic' ? this.riddleArabized : this.riddleRomanized
+        },
         riddleArabized() {
             return parseInt(this.riddle)
         },
         riddleRomanized () {
             return this.$parent.romanize(this.riddle)
-        },
-        currentRiddle() {
-            return this.type == 'arabic' ? this.riddleArabized : this.riddleRomanized
         },
     },
     watch: {
