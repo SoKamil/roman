@@ -3,8 +3,6 @@
     <info-menu  v-show="!gameStarted" @startGame="startGame"></info-menu>
     <transition name="fade"> 
       <div :class="{'shake animated': animated}" @animationend="animated = false" v-if="gameStarted" v-show="!faded" id="mainCard">
-        <!-- <roman-riddle v-if="currentType==='roman'" @goodAnswer="goodAnswer" @badAnswer="badAnswer" v-bind:riddle="currentRiddle" class="riddle"></roman-riddle>
-        <arabic-riddle v-if="currentType==='arabic'" @goodAnswer="goodAnswer" @badAnswer="badAnswer" v-bind:riddle="currentRiddle" class="riddle"></arabic-riddle> -->
         <riddle :type="riddleType" @goodAnswer="goodAnswer" @badAnswer="badAnswer" :riddle="currentRiddle" class="riddle"></riddle>
       </div>
     </transition>
